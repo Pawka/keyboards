@@ -65,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [1] = LAYOUT_ergodox_pretty(
     KC_ESCAPE,      KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,          KC_MEDIA_PLAY_PAUSE,                                KC_AUDIO_MUTE,  KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_BSPACE,
     KC_TRANSPARENT, KC_ESCAPE,      LCTL(KC_PGUP),  LCTL(KC_T),     LCTL(KC_PGDOWN),KC_TRANSPARENT, KC_MEDIA_NEXT_TRACK,                                KC_AUDIO_VOL_UP,KC_PGUP,        KC_HOME,        KC_UP,          KC_END,         KC_DELETE,      KC_F11,
-    KC_TRANSPARENT, KC_TRANSPARENT, LALT(LCTL(KC_LEFT)),KC_D,   LALT(LCTL(KC_RIGHT)),KC_TRANSPARENT,                                                                 KC_PGDOWN,      KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_TRANSPARENT, KC_F12,
+    KC_TRANSPARENT, KC_TRANSPARENT, LALT(LCTL(KC_LEFT)),LALT(KC_TAB),   LALT(LCTL(KC_RIGHT)),KC_TRANSPARENT,                                                                 KC_PGDOWN,      KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_TRANSPARENT, KC_F12,
     KC_TRANSPARENT, KC_TRANSPARENT, LALT(KC_LEFT),  LCTL(KC_W),     LALT(KC_RIGHT), KC_TRANSPARENT, KC_MEDIA_PREV_TRACK,                                KC_AUDIO_VOL_DOWN,KC_TRANSPARENT, KC_MEDIA_PLAY_PAUSE,KC_MEDIA_PREV_TRACK,KC_MEDIA_NEXT_TRACK,KC_TRANSPARENT, KC_TRANSPARENT,
     KC_LCTRL,       KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                                                                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
                                                                                                     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
@@ -94,15 +94,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case LT(1,KC_NO):
       if (!record->event.pressed) {
-          unregister_code(KC_LALT);
+        unregister_code(KC_LALT);
       }
       break;
-    case KC_D:
+    case LALT(KC_TAB):
       if (IS_LAYER_ON(1)) {
         if (record->event.pressed) {
           register_code(KC_LALT);
