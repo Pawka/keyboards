@@ -53,12 +53,12 @@ enum tap_dance_codes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_ergodox_pretty(
-    KC_EQUAL,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_LEFT,                                        KC_RIGHT,       KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_MINUS,
-    KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           TG(3),                                          TG(3),          KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_BSLASH,
-    KC_ESCAPE,       KC_A,           KC_S,           KC_D,           KC_F,           KC_G,                                                                           KC_H,           KC_J,           KC_K,           KC_L,           LT(2,KC_SCOLON),KC_QUOTE,
-    KC_LSHIFT,      LCTL_T(KC_Z),   KC_X,           KC_C,           KC_V,           KC_B,           KC_HYPR,                                        KC_MEH,         KC_N,           KC_M,           KC_COMMA,       KC_DOT,         RCTL_T(KC_SLASH),KC_RSHIFT,
-    KC_LCTRL,       TD(DANCE_0),    KC_LALT,        LT(3,KC_NO),    LT(1,KC_NO),                                                                                                    LT(1,KC_NO),    KC_RALT,        KC_LBRACKET,    KC_RBRACKET,    KC_RCTRL,
-                                                                                                    LALT_T(KC_APPLICATION),KC_LGUI,        KC_LALT,        LCTL_T(KC_ESCAPE),
+    KC_EQUAL,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_MINUS,
+    KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           TG(2),                                          TG(2),          KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_BSLASH,
+    LT(2,KC_ESCAPE),KC_A,           KC_S,           KC_D,           KC_F,           KC_G,                                                                           KC_H,           KC_J,           KC_K,           KC_L,           LT(2,KC_SCOLON),KC_QUOTE,
+    KC_LSHIFT,      LCTL_T(KC_Z),   KC_X,           KC_C,           KC_V,           KC_B,           KC_RALT,                                        KC_RALT,        KC_N,           KC_M,           KC_COMMA,       KC_DOT,         RCTL_T(KC_SLASH),KC_RSHIFT,
+    KC_LCTRL,       TD(DANCE_0),    KC_LALT,        OSL(3),         LT(1,KC_NO),                                                                                                    LT(1,KC_NO),    KC_RALT,        KC_TRANSPARENT, KC_TRANSPARENT, KC_RCTRL,
+                                                                                                    LALT_T(KC_APPLICATION),KC_LGUI,        KC_TRANSPARENT, KC_TRANSPARENT,
                                                                                                                     KC_HOME,        KC_PGUP,
                                                                                     KC_SPACE,       KC_BSPACE,      KC_END,         KC_PGDOWN,      KC_TAB,         KC_ENTER
   ),
@@ -93,6 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                                     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
   ),
 };
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -167,13 +168,24 @@ enum {
     MORE_TAPS
 };
 
-static tap dance_state = {
-    .is_press_action = true,
-    .step = 0
-};
+static tap dance_state[1];
+
+uint8_t dance_step(qk_tap_dance_state_t *state);
+
+uint8_t dance_step(qk_tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (state->interrupted || !state->pressed) return SINGLE_TAP;
+        else return SINGLE_HOLD;
+    } else if (state->count == 2) {
+        if (state->interrupted) return DOUBLE_SINGLE_TAP;
+        else if (state->pressed) return DOUBLE_HOLD;
+        else return DOUBLE_TAP;
+    }
+    return MORE_TAPS;
+}
+
 
 void on_dance_0(qk_tap_dance_state_t *state, void *user_data);
-uint8_t dance_0_dance_step(qk_tap_dance_state_t *state);
 void dance_0_finished(qk_tap_dance_state_t *state, void *user_data);
 void dance_0_reset(qk_tap_dance_state_t *state, void *user_data);
 
@@ -188,20 +200,9 @@ void on_dance_0(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-uint8_t dance_0_dance_step(qk_tap_dance_state_t *state) {
-    if (state->count == 1) {
-        if (state->interrupted || !state->pressed) return SINGLE_TAP;
-        else return SINGLE_HOLD;
-    } else if (state->count == 2) {
-        if (state->interrupted) return DOUBLE_SINGLE_TAP;
-        else if (state->pressed) return DOUBLE_HOLD;
-        else return DOUBLE_TAP;
-    }
-    return MORE_TAPS;
-}
 void dance_0_finished(qk_tap_dance_state_t *state, void *user_data) {
-    dance_state.step = dance_0_dance_step(state);
-    switch (dance_state.step) {
+    dance_state[0].step = dance_step(state);
+    switch (dance_state[0].step) {
         case SINGLE_TAP: register_code16(KC_GRAVE); break;
         case SINGLE_HOLD: register_code16(KC_LGUI); break;
         case DOUBLE_TAP: register_code16(KC_GRAVE); register_code16(KC_GRAVE); break;
@@ -211,13 +212,13 @@ void dance_0_finished(qk_tap_dance_state_t *state, void *user_data) {
 
 void dance_0_reset(qk_tap_dance_state_t *state, void *user_data) {
     wait_ms(10);
-    switch (dance_state.step) {
+    switch (dance_state[0].step) {
         case SINGLE_TAP: unregister_code16(KC_GRAVE); break;
         case SINGLE_HOLD: unregister_code16(KC_LGUI); break;
         case DOUBLE_TAP: unregister_code16(KC_GRAVE); break;
         case DOUBLE_SINGLE_TAP: unregister_code16(KC_GRAVE); break;
     }
-    dance_state.step = 0;
+    dance_state[0].step = 0;
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
