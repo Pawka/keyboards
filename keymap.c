@@ -6,12 +6,18 @@
 #define KC_PC_CUT LCTL(KC_X)
 #define KC_PC_COPY LCTL(KC_C)
 #define KC_PC_PASTE LCTL(KC_V)
-#define ES_LESS_MAC KC_GRAVE
-#define ES_GRTR_MAC LSFT(KC_GRAVE)
-#define ES_BSLS_MAC ALGR(KC_6)
-#define NO_PIPE_ALT KC_GRAVE
-#define NO_BSLS_ALT KC_EQUAL
-#define LSA_T(kc) MT(MOD_LSFT | MOD_LALT, kc)
+
+// Left-hand home row mods
+#define HOME_A LGUI_T(KC_A)
+#define HOME_S LALT_T(KC_S)
+#define HOME_D LCTL_T(KC_D)
+#define HOME_F LSFT_T(KC_F)
+
+// Right-hand home row mods
+#define HOME_J RSFT_T(KC_J)
+#define HOME_K RCTL_T(KC_K)
+#define HOME_L LALT_T(KC_L)
+#define HOME_SCLN RGUI_T(KC_SCLN)
 
 enum custom_keycodes {
   RGB_SLD = EZ_SAFE_RANGE,
@@ -21,7 +27,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_ergodox_pretty(
     KC_EQUAL,       KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_MINUS,
     KC_ESCAPE,      KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_BSLASH,
-    KC_LCTRL,       KC_A,           KC_S,           KC_D,           KC_F,           KC_G,                                                                           KC_H,           KC_J,           KC_K,           KC_L,           KC_SCOLON,      KC_QUOTE,
+    KC_LCTRL,       HOME_A,         HOME_S,         HOME_D,         HOME_F,         LT(2, KC_G),                                                                    KC_H,           HOME_J,         HOME_K,         HOME_L,         HOME_SCLN,      KC_QUOTE,
     KC_LSHIFT,      LCTL_T(KC_Z),   KC_X,           KC_C,           KC_V,           KC_B,           LT(2,KC_NO),                                    TG(2),          KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,       KC_RSHIFT,
     KC_LCTRL,       KC_LGUI,        KC_LALT,        LT(1,KC_NO),    OSL(3),                                                                                                         LT(1,KC_NO),    KC_RALT,        KC_LBRACKET,    KC_RBRACKET,    KC_RCTRL,
                                                                                                     LALT_T(KC_APPLICATION),KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
