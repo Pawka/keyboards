@@ -98,15 +98,17 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     return 180;
 }
 
+const int UHK_LAYER = 6;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case LT(1,KC_NO):
+    case LT(UHK_LAYER,KC_NO):
       if (!record->event.pressed) {
         unregister_code(KC_LALT);
       }
       break;
     case LALT(KC_TAB):
-      if (IS_LAYER_ON(1)) {
+      if (IS_LAYER_ON(UHK_LAYER)) {
         if (record->event.pressed) {
           register_code(KC_LALT);
           tap_code(KC_TAB);
