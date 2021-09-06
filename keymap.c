@@ -106,7 +106,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    return 180;
+    switch (keycode) {
+        case LALT_T(KC_W):
+        case RCTL_T(KC_I):
+            return TAPPING_TERM - 20;
+        case LGUI_T(KC_Q):
+        case RGUI_T(KC_P):
+            return TAPPING_TERM + 20;
+        default:
+            return TAPPING_TERM;
+
+    }
 }
 
 const int UHK_LAYER = 6;
