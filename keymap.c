@@ -111,7 +111,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM - 20;
         case LGUI_T(KC_A):
         case RGUI_T(KC_SCOLON):
-            return TAPPING_TERM + 40;
+            return TAPPING_TERM + 60;
         default:
             return TAPPING_TERM;
 
