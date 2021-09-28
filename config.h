@@ -34,6 +34,12 @@
 #define ENCODER_RESOLUTIONS {2, 1}
 #define ENCODER_DIRECTION_FLIP
 
+#define MOUSEKEY_INTERVAL       20
+#define MOUSEKEY_DELAY          0
+#define MOUSEKEY_TIME_TO_MAX    60
+#define MOUSEKEY_MAX_SPEED      7
+#define MOUSEKEY_WHEEL_DELAY 0
+
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
 // #define SPLIT_USB_DETECT
 // #define NO_USB_STARTUP_CHECK
