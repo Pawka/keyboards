@@ -30,9 +30,8 @@ enum layers {
 // Aliases for readability
 #define QWERTY   DF(_QWERTY)
 
-#define SYM      MO(_SYM)
 #define NAV      MO(_NAV)
-#define FKEYS    MO(_FUNCTION)
+#define LOCALE   MO(_LOCALE)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
@@ -70,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T  ,                                         KC_Y,   KC_U ,  KC_I ,   KC_O ,  KC_P ,    KC_BSLASH,
      CTL_ESC, HOME_A, HOME_S, HOME_D , HOME_F , KC_G  ,                                         KC_H,   HOME_J, HOME_K,  HOME_L, HOME_SCLN,CTL_QUOT,
      KC_LSFT, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B  , KC_LBRC, _______,     _______, KC_RBRC, KC_N,   KC_M ,  KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
-                              KC_MUTE, _______, NAV   , KC_SPC,  LT_TAB,      LT_ENT,  LT_BSPC, LT_DEL, _______, _______),
+                              KC_MUTE, _______, NAV   , KC_SPC,  LT_TAB,      LT_ENT,  LT_BSPC, LT_DEL, LOCALE, _______),
 
     [_NAV] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     REDO,    KC_PASTE,KC_COPY, KC_CUT,  KC_UNDO, _______,
@@ -105,6 +104,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, _______, _______, _______, _______,                                     _______, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______,
                                  _______, _______, _______, _______, _______, KC_MS_BTN1, KC_MS_BTN2, KC_MS_BTN3, _______, _______
+    ),
+
+    [_LOCALE] = LAYOUT(
+      _______, RALT_T(KC_1), RALT_T(KC_2), RALT_T(KC_3), RALT_T(KC_4), RALT_T(KC_5),  RALT_T(KC_6), RALT_T(KC_7), RALT_T(KC_8), RALT_T(KC_9), RALT_T(KC_0), RALT_T(KC_EQL),
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
 // /*
