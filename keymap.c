@@ -70,8 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T  ,                                         KC_Y,   KC_U ,  KC_I ,   KC_O ,  KC_P ,    KC_BSLASH,
      CTL_ESC, HOME_A, HOME_S, HOME_D , HOME_F , KC_G  ,                                         KC_H,   HOME_J, HOME_K,  HOME_L, HOME_SCLN,CTL_QUOT,
      KC_LSFT, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B  , KC_LBRC, _______,     _______, KC_RBRC, KC_N,   KC_M ,  KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
-                              KC_MUTE, _______, NAV   , KC_SPC,  LT_TAB,      LT_ENT,  LT_BSPC, LT_DEL, _______, _______
-    ),
+                              KC_MUTE, _______, NAV   , KC_SPC,  LT_TAB,      LT_ENT,  LT_BSPC, LT_DEL, _______, _______),
 
     [_NAV] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     REDO,    KC_PASTE,KC_COPY, KC_CUT,  KC_UNDO, _______,
@@ -82,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_SYM] = LAYOUT(
      _______ , KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                                       _______,   _______,   _______,   _______,   _______, _______,
-     _______ , KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRAVE,                                     _______, _______, _______, _______, _______, _______,
+     _______ , KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRAVE,                                     _______, KC_RSFT, KC_RCTL, KC_LALT, KC_RGUI, _______,
      _______ , KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -122,3 +121,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 //     ),
 };
+
+#ifdef ENCODER_ENABLE
+bool encoder_update_user(uint8_t index, bool clockwise) {
+    if (index == 0) {
+        // Volume control
+        if (clockwise) {
+            tap_code(KC_VOLU);
+        } else {
+            tap_code(KC_VOLD);
+        }
+    }
+    else if (index == 1) {
+        // Page up/Page down
+        if (clockwise) {
+            tap_code(KC_WH_D);
+        } else {
+            tap_code(KC_WH_U);
+        }
+    }
+    return true;
+}
+#endif
