@@ -56,7 +56,11 @@ enum layers {
 #define HOME_L LALT_T(KC_L)
 #define HOME_SCLN RGUI_T(KC_SCLN)
 
-#define REDO LCTL(LSFT(KC_Z))
+#define UNDO  LCTL(KC_Z)
+#define REDO  LCTL(LSFT(KC_Z))
+#define CUT   LCTL(KC_X)
+#define COPY  LCTL(KC_C)
+#define PASTE LCTL(KC_V)
 
 // Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
 // The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
@@ -78,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______, _______, _______, _______, _______, _______, KC_TRNS, _______
     ),
     [_NAV] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     REDO,    KC_PASTE,KC_COPY, KC_CUT,  KC_UNDO, _______,
+      _______, _______, _______, _______, _______, _______,                                     REDO,    PASTE,   COPY,    CUT,     UNDO, _______,
       _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_INS,  _______,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
