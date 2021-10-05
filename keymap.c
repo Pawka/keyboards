@@ -28,8 +28,6 @@ enum layers {
 
 
 // Aliases for readability
-#define QWERTY   DF(_QWERTY)
-
 #define NAV      MO(_NAV)
 #define LOCALE   MO(_LOCALE)
 
@@ -62,6 +60,12 @@ enum layers {
 #define COPY  LCTL(KC_C)
 #define PASTE LCTL(KC_V)
 
+// Navigation shortcuts
+#define PREV_TAB LCTL(KC_PGUP)
+#define NEXT_TAB LCTL(KC_PGDN)
+#define NEW_TAB LCTL(KC_T)
+#define CLOSE_TAB LCTL(KC_W)
+
 // Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
 // The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
 // produces the key `tap` when tapped (i.e. pressed and released).
@@ -70,7 +74,7 @@ enum layers {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT(
-     KC_TAB , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T  ,                                         KC_Y,   KC_U ,  KC_I ,   KC_O ,  KC_P ,    KC_BSLASH,
+     KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T  ,                                         KC_Y,   KC_U ,  KC_I ,   KC_O ,  KC_P ,    KC_BSLASH,
      CTL_ESC, HOME_A, HOME_S, HOME_D , HOME_F , KC_G  ,                                         KC_H,   HOME_J, HOME_K,  HOME_L, HOME_SCLN,CTL_QUOT,
      KC_LSFT, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B  , KC_LBRC, _______,     _______, KC_RBRC, KC_N,   KC_M ,  KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
                               KC_MUTE, _______, NAV   , KC_SPC,  LT_TAB,      LT_ENT,  LT_BSPC, LT_DEL, LOCALE, _______),
@@ -82,9 +86,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______, _______, _______, _______, _______, _______, KC_TRNS, _______
     ),
     [_NAV] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     REDO,    PASTE,   COPY,    CUT,     UNDO, _______,
+      _______, _______, PREV_TAB,NEW_TAB, NEXT_TAB,_______,                                     REDO,    PASTE,   COPY,    CUT,     UNDO, _______,
       _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_INS,  _______,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______,
+      _______, _______, _______, CLOSE_TAB,_______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
