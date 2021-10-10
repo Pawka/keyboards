@@ -169,12 +169,15 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LALT_T(KC_S):
-        case RCTL_T(KC_L):
-            return TAPPING_TERM - 30;
-        case LGUI_T(KC_A):
-        case RGUI_T(KC_SCOLON):
+        case HOME_A:
+        case HOME_SCLN:
             return TAPPING_TERM + 80;
+        case HOME_D:
+        case HOME_K:
+            return TAPPING_TERM - 30;
+        case HOME_F:
+        case HOME_J:
+            return TAPPING_TERM - 30;
         default:
             return TAPPING_TERM;
 
