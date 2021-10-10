@@ -154,14 +154,16 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     }
     else if (index == 1) {
-        // Page up/Page down
+        // Scroll up/down
         if (clockwise) {
+            tap_code(KC_WH_D);
             tap_code(KC_WH_D);
         } else {
             tap_code(KC_WH_U);
+            tap_code(KC_WH_U);
         }
     }
-    return true;
+    return false;
 }
 #endif
 

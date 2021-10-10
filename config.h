@@ -31,7 +31,7 @@
 #define RETRO_TAPPING_PER_KEY
 
 // Set proper resolution for industrial encoder.
-#define ENCODER_RESOLUTIONS {2, 1}
+#define ENCODER_RESOLUTION 2
 #define ENCODER_DIRECTION_FLIP
 
 #define MOUSEKEY_INTERVAL       20
