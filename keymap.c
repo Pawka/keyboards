@@ -80,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT(
      KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T  ,                                         KC_Y,   KC_U ,  KC_I ,   KC_O ,  KC_P ,    KC_BSLASH,
-     KC_LCTL, KC_A  , HOME_S, HOME_D , HOME_F , KC_G  ,                                         KC_H,   HOME_J, HOME_K,  HOME_L, KC_SCLN,  CTL_QUOT,
+     KC_LCTL, HOME_A, HOME_S, HOME_D , HOME_F , KC_G  ,                                         KC_H,   HOME_J, HOME_K,  HOME_L, HOME_SCLN,CTL_QUOT,
      KC_LSFT, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B  , KC_LBRC, _______,     _______, KC_RBRC, KC_N,   KC_M ,  KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
                               TD(TD_MPP),KC_LGUI,KC_LSFT,LT_SPC ,  LT_TAB,      LT_ENT,  LT_BSPC, LT_DEL, FUNC, _______),
 
@@ -175,7 +175,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case HOME_A:
         case HOME_SCLN:
-            return TAPPING_TERM + 80;
+            return TAPPING_TERM + 150;
         case HOME_D:
         case HOME_K:
             return TAPPING_TERM - 30;
