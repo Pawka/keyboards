@@ -173,12 +173,19 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        // Win
         case HOME_A:
         case HOME_SCLN:
-            return TAPPING_TERM + 150;
+            return TAPPING_TERM + 250;
+        // Alt
+        case HOME_S:
+        case HOME_L:
+            return TAPPING_TERM + 50;
+        // Ctrl
         case HOME_D:
         case HOME_K:
             return TAPPING_TERM - 30;
+        // Shift
         case HOME_F:
         case HOME_J:
             return TAPPING_TERM - 50;
