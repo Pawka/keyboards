@@ -190,6 +190,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // Ctrl
         case HOME_D:
         case HOME_K:
+        case CTL_TAB:
             return TAPPING_TERM - 30;
         // Shift
         case HOME_F:
