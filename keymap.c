@@ -36,8 +36,10 @@ enum {
 #define LOCALE   MO(_LOCALE)
 #define FUNC     MO(_FUNCTION)
 #define NUM      MO(_NUMNEW)
+#define MOUSE    MO(_MOUSE)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
+#define CTL_TAB  MT(MOD_LCTL, KC_TAB)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
 #define CTL_MINS MT(MOD_RCTL, KC_MINUS)
 #define ALT_ENT  MT(MOD_LALT, KC_ENT)
@@ -83,8 +85,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
      KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T  ,                                           KC_Y,   KC_U ,  KC_I ,   KC_O ,  KC_P ,    KC_BSLASH,
      KC_LCTL, HOME_A, HOME_S, HOME_D , HOME_F , KC_G  ,                                           KC_H,   HOME_J, HOME_K,  HOME_L, HOME_SCLN,CTL_QUOT,
-     KC_LSFT, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B  , KC_LBRC, _______,        FUNC  , KC_RBRC, KC_N,   KC_M ,  KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
-                              TD(TD_MPP),KC_LGUI,KC_LSFT,LT_SPC, LT_TAB ,        LT_ENT, LT_BSPC, LT_DEL, NUM, _______),
+     KC_LSFT, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B  , KC_LBRC, MOUSE  ,        FUNC  , KC_RBRC, KC_N,   KC_M ,  KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
+                              TD(TD_MPP),KC_LGUI,KC_LSFT,LT_SPC, CTL_TAB,        LT_ENT, LT_BSPC, LT_DEL, NUM, _______),
 
     [_LOCALE] = LAYOUT(
       _______, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),    RALT(KC_6), RALT(KC_7), RALT(KC_8), RALT(KC_9), RALT(KC_0), RALT(KC_EQL),
