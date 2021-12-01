@@ -79,10 +79,10 @@ enum {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT(
-     KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T  ,                                         KC_Y,   KC_U ,  KC_I ,   KC_O ,  KC_P ,    KC_BSLASH,
-     KC_LCTL, HOME_A, HOME_S, HOME_D , HOME_F , KC_G  ,                                         KC_H,   HOME_J, HOME_K,  HOME_L, HOME_SCLN,CTL_QUOT,
-     KC_LSFT, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B  , KC_LBRC, _______,     _______, KC_RBRC, KC_N,   KC_M ,  KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
-                              TD(TD_MPP),KC_LGUI,KC_LSFT,LT_SPC ,  LT_TAB,      LT_ENT,  LT_BSPC, LT_DEL, FUNC, _______),
+     KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T  ,                                          KC_Y,   KC_U ,  KC_I ,   KC_O ,  KC_P ,    KC_BSLASH,
+     KC_LCTL, HOME_A, HOME_S, HOME_D , HOME_F , KC_G  ,                                          KC_H,   HOME_J, HOME_K,  HOME_L, HOME_SCLN,CTL_QUOT,
+     KC_LSFT, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B  , KC_LBRC, _______,        FUNC , KC_RBRC, KC_N,   KC_M ,  KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
+                              TD(TD_MPP),KC_LGUI,KC_LSFT,LT_SPC ,  LT_TAB,      LT_ENT, LT_BSPC, LT_DEL, _______, _______),
 
     [_LOCALE] = LAYOUT(
       _______, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),    RALT(KC_6), RALT(KC_7), RALT(KC_8), RALT(KC_9), RALT(KC_0), RALT(KC_EQL),
@@ -112,10 +112,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_FUNCTION] = LAYOUT(
-      _______,  KC_F12,  KC_F7 ,  KC_F8,   KC_F9 , _______,                                     _______, _______, _______, _______, _______, _______,
-      _______,  KC_F11,  KC_F4 ,  KC_F5 ,  KC_F6 , _______,                                     _______, KC_RSFT, KC_RCTL, KC_LALT, KC_RGUI, _______,
-      _______,  KC_F10,  KC_F1 ,  KC_F2 ,  KC_F3 , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+      _______,   KC_F1 ,  KC_F2 ,  KC_F3,   KC_F4 ,  KC_F5 ,                                      KC_F6 ,  KC_F7 ,  KC_F8 ,  KC_F9 , KC_F10 ,  KC_F11,
+      _______,  _______, _______, _______, _______, _______,                                     _______, KC_RSFT, KC_RCTL, KC_LALT, KC_RGUI,  KC_F12,
+      _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     [_MOUSE] = LAYOUT(
