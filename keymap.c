@@ -35,7 +35,7 @@ enum {
 // Aliases for readability
 #define LOCALE   MO(_LOCALE)
 #define FUNC     MO(_FUNCTION)
-#define NUM      MO(_NUMNEW)
+#define NUM      MO(_NUM)
 #define MOUSE    MO(_MOUSE)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
@@ -45,7 +45,7 @@ enum {
 #define ALT_ENT  MT(MOD_LALT, KC_ENT)
 
 // Layers
-#define LT_ENT   LT(_NUM, KC_ENT)
+#define LT_ENT   LT(_NUMNEW, KC_ENT)
 #define LT_BSPC  LT(_SYM, KC_BSPC)
 #define LT_DEL   LT(_LOCALE, KC_DEL)
 #define LT_TAB   LT(_MOUSE, KC_TAB)
