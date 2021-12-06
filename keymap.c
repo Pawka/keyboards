@@ -207,3 +207,18 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once for mute, twice for play/pause
     [TD_MPP] = ACTION_TAP_DANCE_DOUBLE(KC_MUTE, KC_MPLY),
 };
+
+#ifdef COMBO_ENABLE
+enum combos {
+  UI_LPRN,
+  IO_RPRN,
+};
+
+const uint16_t PROGMEM ui_combo[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
+
+combo_t key_combos[COMBO_COUNT] = {
+  [UI_LPRN] = COMBO(ui_combo, KC_LPRN),
+  [IO_RPRN] = COMBO(io_combo, KC_RPRN),
+};
+#endif
