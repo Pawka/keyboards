@@ -212,13 +212,19 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 enum combos {
   UI_LPRN,
   IO_RPRN,
+  MLT_LBRC,
+  LTGT_RBRC,
 };
 
 const uint16_t PROGMEM ui_combo[] = {KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM mlt_combo[] = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM ltgt_combo[] = {KC_COMM, KC_DOT, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   [UI_LPRN] = COMBO(ui_combo, KC_LPRN),
   [IO_RPRN] = COMBO(io_combo, KC_RPRN),
+  [MLT_LBRC] = COMBO(mlt_combo, KC_LBRC),
+  [LTGT_RBRC] = COMBO(ltgt_combo, KC_RBRC),
 };
 #endif
