@@ -43,5 +43,5 @@
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
 // #define SPLIT_USB_DETECT
 // #define NO_USB_STARTUP_CHECK
-#define COMBO_COUNT 4
 #define COMBO_TERM 60
+#define COMBO_VARIABLE_LEN 2
