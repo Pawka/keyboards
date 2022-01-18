@@ -1,5 +1,6 @@
-SUBS(helloWorld, "QMK is pretty rad eh?", KC_V, KC_B)
-COMB(lprn,      KC_LPRN,        KC_U, KC_I)
-COMB(rprn,      KC_RPRN,        KC_I, KC_O)
-COMB(lbrc,      KC_LBRC,        KC_M, KC_COMM)
-COMB(rbrc,      KC_RBRC,        KC_COMM, KC_DOT)
+COMB(lprn,      KC_LPRN,        KC_U, KC_I)         // (
+COMB(rprn,      KC_RPRN,        KC_I, KC_O)         // )
+COMB(lcbr,      KC_LCBR,        KC_W, KC_E)         // {
+COMB(rcbr,      KC_RCBR,        KC_E, KC_R)         // }
+COMB(lbrc,      KC_LBRC,        KC_M, KC_COMM)      // [
+COMB(rbrc,      KC_RBRC,        KC_COMM, KC_DOT)    // ]
