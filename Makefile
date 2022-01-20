@@ -18,11 +18,11 @@ $(QMK_HOME):
 	@echo "Add git sub-modules..."
 	git submodule add -f $(QMK_REPO)
 
-$(KYRIA_LINK):
+$(KYRIA_LINK): $(QMK_HOME)
 	@echo "Symklink for Kyria"
 	ln -s $(HOME)/$(KYRIA) $(KYRIA_LINK)
 
-$(ERGODOX_LINK):
+$(ERGODOX_LINK): $(QMK_HOME)
 	@echo "Symklink for Ergodox"
 	ln -s $(HOME)/$(ERGODOX) $(ERGODOX_LINK)
 
