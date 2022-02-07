@@ -10,7 +10,7 @@ ERGODOX=keyboards/ergodox_ez/keymaps/pawka
 ERGODOX_LINK=$(QMK_HOME)/$(ERGODOX)
 
 .PHONY: all
-all: $(VENV)
+all: $(VENV) symlinks
 
 .PHONY: symlinks
 symlinks: $(KYRIA_LINK) $(ERGODOX_LINK)
@@ -31,11 +31,11 @@ $(VENV): submodules
 
 $(KYRIA_LINK): submodules
 	@echo "Symklink for Kyria"
-	ln -s $(HOME)/$(KYRIA) $(KYRIA_LINK)
+	ln -Tsf $(HOME)/$(KYRIA) $(KYRIA_LINK)
 
 $(ERGODOX_LINK): submodules
 	@echo "Symklink for Ergodox"
-	ln -s $(HOME)/$(ERGODOX) $(ERGODOX_LINK)
+	ln -Tsf $(HOME)/$(ERGODOX) $(ERGODOX_LINK)
 
 .PHONY: clean
 clean:
