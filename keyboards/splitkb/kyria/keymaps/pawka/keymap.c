@@ -16,6 +16,11 @@
 #include QMK_KEYBOARD_H
 #include "g/keymap_combo.h"
 
+// Used for keylogging.
+#ifdef CONSOLE_ENABLE
+#include "print.h"
+#endif
+
 enum layers {
     _QWERTY = 0,
     _NAV,
@@ -184,6 +189,25 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         default:
             return TAPPING_TERM;
     }
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+#ifdef CONSOLE_ENABLE
+    if (record->event.pressed) {
+        uprintf("0x%04X,%u,%u,%u,%b,0x%02X,0x%02X,%u\n",
+                keycode,
+                record->event.key.row,
+                record->event.key.col,
+                get_highest_layer(layer_state),
+                record->event.pressed,
+                get_mods(),
+                get_oneshot_mods(),
+                record->tap.count
+               );
+
+    }
+#endif
+    return true;
 }
 
 // Tap dance actions should be registereg here.

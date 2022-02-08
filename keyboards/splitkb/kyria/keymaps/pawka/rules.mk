@@ -5,3 +5,5 @@ RGBLIGHT_ENABLE = no      # Enable keyboard RGB underglow
 TAP_DANCE_ENABLE = yes
 COMBO_ENABLE = yes
 MOUSEKEY_ENABLE = yes
+
+CONSOLE_ENABLE = yes
