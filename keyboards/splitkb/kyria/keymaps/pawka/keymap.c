@@ -40,9 +40,10 @@ enum {
 #define LOCALE   MO(_LOCALE)
 #define NUM      MO(_NUM)
 #define MOUSE    MO(_MOUSE)
+#define MEDIA    TD(TD_MPP)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
-#define CTL_TAB  MT(MOD_LCTL, KC_TAB)
+#define SFT_TAB  MT(MOD_LSFT, KC_TAB)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
 #define CTL_MINS MT(MOD_RCTL, KC_MINUS)
 #define ALT_ENT  MT(MOD_LALT, KC_ENT)
@@ -53,7 +54,6 @@ enum {
 #define LT_DEL   LT(_LOCALE, KC_DEL)
 #define LT_TAB   LT(_MOUSE, KC_TAB)
 #define LT_SPC   LT(_NAV, KC_SPC)
-#define LT_G     LT(_MOUSE, KC_G)
 
 // Left-hand home row mods
 #define HOME_A LGUI_T(KC_A)
@@ -82,23 +82,10 @@ enum {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT(
-     KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T  ,                                         KC_Y   , KC_U   , KC_I   , KC_O  , KC_P ,    KC_BSLASH,
-     KC_LSFT, KC_A  , HOME_S, HOME_D , HOME_F , LT_G  ,                                         KC_H   , HOME_J , HOME_K , HOME_L, KC_SCLN , CTL_QUOT,
-     KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B  , KC_LBRC, TG(_MOUSE),  _______, KC_RBRC, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
-                              TD(TD_MPP), _______, KC_LGUI, LT_SPC , CTL_TAB, LT_ENT , LT_BSPC, LT_DEL , NUM    , _______),
-
-    [_LOCALE] = LAYOUT(
-      _______, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),    RALT(KC_6), RALT(KC_7), RALT(KC_8), RALT(KC_9), RALT(KC_0), RALT(KC_EQL),
-      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, KC_TRNS, _______
-    ),
-    [_NAV] = LAYOUT(
-      _______, _______, PREV_TAB,NEW_TAB, NEXT_TAB,_______,                                     REDO,    PASTE,   COPY,    CUT,     UNDO, _______,
-      _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_INS,  _______,
-      _______, _______, _______, CLOSE_TAB,_______, _______, _______, _______, _______, _______,KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-    ),
+     KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T   ,                                     KC_Y   , KC_U   , KC_I   , KC_O  , KC_P ,    KC_BSLASH,
+     KC_LSFT, KC_A  , HOME_S, HOME_D , HOME_F , KC_G   ,                                     KC_H   , HOME_J , HOME_K , HOME_L, KC_SCLN , CTL_QUOT,
+     KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   , _______, _______, _______, _______, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
+                              MEDIA  , MOUSE  , KC_LGUI, LT_SPC , SFT_TAB, LT_ENT , LT_BSPC, LOCALE,  _______, _______),
 
     [_SYM] = LAYOUT(
      _______ , KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PERC,                                     KC_PIPE, KC_UNDS, KC_PLUS, KC_ASTR, _______, _______,
@@ -107,8 +94,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
+    [_NAV] = LAYOUT(
+      _______, _______, PREV_TAB,NEW_TAB, NEXT_TAB,_______,                                     _______, _______, _______, KC_DEL,  _______, _______,
+      _______, _______, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
+      _______, _______, _______, CLOSE_TAB,_______,_______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, RESET  ,
+                                 _______, _______, _______, _______, _______, _______, KC_DEL,  _______, _______, _______
+    ),
+
     [_MOUSE] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     REDO, KC_PASTE, KC_MS_U, KC_CUT, KC_UNDO, RESET,
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, KC_MS_U, _______, _______, _______,
       _______, _______, _______, _______, _______, _______,                                     _______, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______,
                                  _______, _______, _______, _______, _______, KC_MS_BTN1, KC_MS_BTN2, KC_MS_BTN3, _______, _______
@@ -121,6 +115,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
+    [_LOCALE] = LAYOUT(
+      _______, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),    RALT(KC_6), RALT(KC_7), RALT(KC_8), RALT(KC_9), RALT(KC_0), RALT(KC_EQL),
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
 // /*
 //  * Layer template
 //  *
@@ -180,7 +180,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // Ctrl
         case HOME_D:
         case HOME_K:
-        case CTL_TAB:
+        case SFT_TAB:
             return TAPPING_TERM - 30;
         // Shift
         case HOME_F:
