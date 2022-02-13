@@ -81,14 +81,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               KC_MUTE, MOUSE  , KC_LGUI, LT_SPC , SFT_TAB, LT_ENT , LT_BSPC, LOCALE,  _______, _______),
 
     [_SYM] = LAYOUT(
-     _______ , KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PERC,                                     KC_PIPE, KC_UNDS, KC_PLUS, KC_ASTR, _______, _______,
-     _______ , KC_CIRC, KC_DLR,  KC_HASH, KC_DQT,  KC_GRAVE,                                    KC_AMPR, KC_EQL , KC_MINS, KC_SLSH, KC_COLN, KC_DQT ,
+     _______ , KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PERC,                                     KC_PIPE, KC_UNDS, KC_PLUS, KC_SLSH, _______, _______,
+     _______ , KC_CIRC, KC_DLR,  KC_HASH, KC_DQT,  KC_GRAVE,                                    KC_AMPR, KC_EQL , KC_MINS, KC_ASTR, KC_COLN, KC_DQT ,
      _______ , _______, _______, _______, _______, KC_TILD, _______, _______, _______, _______, KC_QUOT, KC_DQT , KC_LT  , KC_GT  , _______, _______,
                                  KC_MPLY, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     [_NAV] = LAYOUT(
-      _______, _______, PREV_TAB,NEW_TAB, NEXT_TAB,_______,                                     _______, _______, _______, KC_DEL,  _______, _______,
+      _______, _______, PREV_TAB,NEW_TAB, NEXT_TAB,_______,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
       _______, _______, _______, CLOSE_TAB,_______,_______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, RESET  ,
                                  _______, _______, _______, _______, _______, _______, KC_DEL,  _______, _______, _______
