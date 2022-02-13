@@ -45,3 +45,6 @@
 // #define NO_USB_STARTUP_CHECK
 #define COMBO_TERM 30
 #define COMBO_VARIABLE_LEN 2
+
+// Number of taps to toggle layer with TT().
+#define TAPPING_TOGGLE 2

@@ -30,16 +30,10 @@ enum layers {
     _LOCALE,
 };
 
-// Tap Dance declarations
-enum {
-    TD_MPP, // Mute, play/pause
-};
-
 // Aliases for readability
 #define LOCALE   MO(_LOCALE)
 #define NUM      MO(_NUM)
-#define MOUSE    MO(_MOUSE)
-#define MEDIA    TD(TD_MPP)
+#define MOUSE    TT(_MOUSE)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define SFT_TAB  MT(MOD_LSFT, KC_TAB)
@@ -104,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, _______, _______, _______, _______,                                     _______, _______, KC_MS_U, _______, _______, _______,
       _______, _______, _______, _______, _______, _______,                                     _______, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______,
-                                 _______, _______, _______, _______, _______, KC_MS_BTN1, KC_MS_BTN2, KC_MS_BTN3, _______, _______
+                                 _______, _______, _______,TO(_QWERTY),_______,KC_MS_BTN1, KC_MS_BTN2, KC_MS_BTN3, _______, _______
     ),
 
     [_NUM] = LAYOUT(
@@ -210,9 +204,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
     return true;
 }
-
-// Tap dance actions should be registereg here.
-qk_tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for mute, twice for play/pause
-    [TD_MPP] = ACTION_TAP_DANCE_DOUBLE(KC_MUTE, KC_MPLY),
-};
