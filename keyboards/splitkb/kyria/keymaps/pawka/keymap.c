@@ -28,7 +28,6 @@ enum layers {
     _NUM,
     _MOUSE,
     _LOCALE,
-    _MEDIA,
 };
 
 // Tap Dance declarations
@@ -85,13 +84,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T   ,                                     KC_Y   , KC_U   , KC_I   , KC_O  , KC_P ,    KC_BSLASH,
      KC_LSFT, KC_A  , HOME_S, HOME_D , HOME_F , KC_G   ,                                     KC_H   , HOME_J , HOME_K , HOME_L, KC_SCLN , CTL_QUOT,
      KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   , _______, _______, _______, _______, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
-                              MEDIA  , MOUSE  , KC_LGUI, LT_SPC , SFT_TAB, LT_ENT , LT_BSPC, LOCALE,  _______, _______),
+                              KC_MUTE, MOUSE  , KC_LGUI, LT_SPC , SFT_TAB, LT_ENT , LT_BSPC, LOCALE,  _______, _______),
 
     [_SYM] = LAYOUT(
      _______ , KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PERC,                                     KC_PIPE, KC_UNDS, KC_PLUS, KC_ASTR, _______, _______,
      _______ , KC_CIRC, KC_DLR,  KC_HASH, KC_DQT,  KC_GRAVE,                                    KC_AMPR, KC_EQL , KC_MINS, KC_SLSH, KC_COLN, KC_DQT ,
      _______ , _______, _______, _______, _______, KC_TILD, _______, _______, _______, _______, KC_QUOT, KC_DQT , KC_LT  , KC_GT  , _______, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+                                 KC_MPLY, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     [_NAV] = LAYOUT(
