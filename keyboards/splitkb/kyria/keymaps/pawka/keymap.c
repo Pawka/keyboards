@@ -34,6 +34,10 @@ enum layers {
 #define LOCALE   MO(_LOCALE)
 #define NUM      MO(_NUM)
 #define MOUSE    TT(_MOUSE)
+#define MOUSE_1  KC_MS_BTN1
+#define MOUSE_2  KC_MS_BTN2
+#define MOUSE_3  KC_MS_BTN3
+#define TO_BASE  TO(_QWERTY)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define SFT_TAB  MT(MOD_LSFT, KC_TAB)
@@ -103,10 +107,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_MOUSE] = LAYOUT(
-      _______, _______, _______, KC_MS_U, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, KC_WH_L, KC_WH_U, KC_WH_D, KC_WH_R, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-                                 _______, TO(_QWERTY),KC_MS_BTN3,KC_MS_BTN2,KC_MS_BTN1,_______, _______, _______, _______, _______
+      _______, XXXXXXX, KC_WH_L, KC_MS_U, KC_WH_R, KC_WH_U,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+      _______, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+      _______, XXXXXXX, CUT    , COPY   , PASTE  , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+                                 _______, TO_BASE, MOUSE_3, MOUSE_2, MOUSE_1, MOUSE_1, MOUSE_2, MOUSE_3, TO_BASE, _______
     ),
 
     [_LOCALE] = LAYOUT(
