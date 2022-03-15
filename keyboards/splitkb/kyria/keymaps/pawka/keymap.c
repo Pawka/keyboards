@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T   ,                                     KC_Y   , KC_U   , KC_I   , KC_O  , KC_P ,    KC_BSLASH,
      KC_LSFT, KC_A  , HOME_S, HOME_D , HOME_F , KC_G   ,                                     KC_H   , HOME_J , HOME_K , HOME_L, KC_SCLN , CTL_QUOT,
      KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   , _______, _______, _______, _______, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
-                              KC_MUTE, MOUSE  , KC_LGUI, LT_SPC , SFT_TAB, LT_ENT , LT_BSPC, LOCALE,  MOUSE  , _______
+                              KC_MUTE, TO(_MOUSE),KC_LGUI,LT_SPC, SFT_TAB, LT_ENT , LT_BSPC, LOCALE,  MOUSE  , _______
     ),
 
     [_SYM] = LAYOUT(
@@ -108,9 +108,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_MOUSE] = LAYOUT(
       _______, XXXXXXX, KC_WH_L, KC_MS_U, KC_WH_R, KC_WH_U,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-      _______, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+      _______, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,                                     XXXXXXX, KC_RSFT, KC_RCTL, KC_LALT, XXXXXXX, _______,
       _______, XXXXXXX, CUT    , COPY   , PASTE  , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-                                 _______, TO_BASE, MOUSE_3, MOUSE_2, MOUSE_1, MOUSE_1, MOUSE_2, MOUSE_3, TO_BASE, _______
+                                 _______, TO_BASE, MOUSE_3, MOUSE_2, MOUSE_1, _______, _______, _______, TO_BASE, _______
     ),
 
     [_LOCALE] = LAYOUT(
