@@ -188,12 +188,12 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case HOME_D:
         case HOME_K:
         case SFT_TAB:
-        case LT_BSPC:
-        case LT_ENT:
             return TAPPING_TERM - 30;
         // Shift
         case HOME_F:
         case HOME_J:
+        case LT_BSPC:
+        case LT_ENT:
             return TAPPING_TERM - 50;
         default:
             return TAPPING_TERM;
