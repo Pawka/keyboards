@@ -64,11 +64,12 @@ enum layers {
 #define HOME_L LALT_T(KC_L)
 #define HOME_SCLN RGUI_T(KC_SCLN)
 
-#define UNDO  LCTL(KC_Z)
-#define REDO  LCTL(LSFT(KC_Z))
-#define CUT   LCTL(KC_X)
-#define COPY  LCTL(KC_C)
-#define PASTE LCTL(KC_V)
+#define UNDO    LCTL(KC_Z)
+#define REDO    LCTL(LSFT(KC_Z))
+#define CUT     LCTL(KC_X)
+#define COPY    LCTL(KC_C)
+#define PASTE   LCTL(KC_V)
+#define SEL_ALL LCTL(KC_A)
 
 // Navigation shortcuts
 #define PREV_TAB LCTL(KC_PGUP)
@@ -108,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_MOUSE] = LAYOUT(
       _______, XXXXXXX, KC_WH_L, KC_MS_U, KC_WH_R, KC_WH_U,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-      _______, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,                                     XXXXXXX, KC_RSFT, KC_RCTL, KC_LALT, XXXXXXX, _______,
+      _______, SEL_ALL, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,                                     XXXXXXX, KC_RSFT, KC_RCTL, KC_LALT, XXXXXXX, _______,
       _______, XXXXXXX, CUT    , COPY   , PASTE  , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
                                  _______, TO_BASE, MOUSE_3, MOUSE_2, MOUSE_1, _______, _______, _______, TO_BASE, _______
     ),
