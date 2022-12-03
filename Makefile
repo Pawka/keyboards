@@ -19,7 +19,7 @@ symlinks: $(KYRIA_LINK) $(ERGODOX_LINK)
 submodules: $(QMK_HOME)
 	@echo "Update git sub-modules..."
 	git submodule sync --recursive
-	git submodule update --init --recursive --progress
+	git submodule update --init --recursive --progress --remote
 
 $(QMK_HOME):
 	@echo "Add git sub-modules..."
