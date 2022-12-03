@@ -48,3 +48,5 @@
 
 // Number of taps to toggle layer with TT().
 #define TAPPING_TOGGLE 2
+
+#define LEADER_TIMEOUT 300

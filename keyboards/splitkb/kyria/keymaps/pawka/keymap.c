@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
      KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T   ,                                     KC_Y   , KC_U   , KC_I   , KC_O  , KC_P ,    KC_BSLS,
      KC_LSFT, KC_A  , HOME_S, HOME_D , HOME_F , KC_G   ,                                     KC_H   , HOME_J , HOME_K , HOME_L, KC_SCLN , CTL_QUOT,
-     KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   , _______, _______, _______, _______, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
+     KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   , _______, _______, _______, KC_LEAD, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
                               KC_MUTE, TO(_MOUSE),KC_LGUI,LT_SPC, CTL_TAB, LT_ENT , LT_BSPC, LOCALE,  MOUSE  , _______
     ),
 
@@ -220,4 +220,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 #endif
     return true;
+}
+
+LEADER_EXTERNS();
+
+void matrix_scan_user(void) {
+    LEADER_DICTIONARY() {
+        leading = false;
+        leader_end();
+
+        SEQ_ONE_KEY(KC_T) {
+            // Reopen last tab.
+            // TODO: make compatible with Mac.
+            SEND_STRING(SS_LCTL(SS_LSFT("t")));
+        }
+        SEQ_TWO_KEYS(KC_W, KC_E) {
+            SEND_STRING("povilas.");
+            SEND_STRING("balzara");
+            SEND_STRING("vicius");
+            SEND_STRING("@");
+            SEND_STRING("chronos");
+            SEND_STRING("phere.io");
+        }
+        SEQ_TWO_KEYS(KC_P, KC_E) {
+            SEND_STRING("povilas");
+            SEND_STRING("@");
+            SEND_STRING("balzara");
+            SEND_STRING("vicius");
+            SEND_STRING(".lt");
+        }
+    }
 }
