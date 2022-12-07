@@ -23,6 +23,7 @@
 
 enum layers {
     _QWERTY = 0,
+    _MACOS,
     _SYM,
     _NAV,
     _NUM,
@@ -42,6 +43,7 @@ enum layers {
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define CTL_TAB  MT(MOD_LCTL, KC_TAB)
+#define GUI_TAB  MT(MOD_LGUI, KC_TAB)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
 #define CTL_MINS MT(MOD_RCTL, KC_MINUS)
 #define ALT_ENT  MT(MOD_LALT, KC_ENT)
@@ -83,8 +85,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
      KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T   ,                                     KC_Y   , KC_U   , KC_I   , KC_O  , KC_P ,    KC_BSLS,
      KC_LSFT, KC_A  , HOME_S, HOME_D , HOME_F , KC_G   ,                                     KC_H   , HOME_J , HOME_K , HOME_L, KC_SCLN , CTL_QUOT,
-     KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   , _______, _______, _______, KC_LEAD, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
+     KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   , DF(_MACOS), _______, _______, KC_LEAD, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
                               KC_MUTE, TO(_MOUSE),KC_LGUI,LT_SPC, CTL_TAB, LT_ENT , LT_BSPC, LOCALE,  MOUSE  , _______
+    ),
+
+    [_MACOS] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, DF(_QWERTY), _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                 _______, _______, _______, _______, GUI_TAB, _______, _______, _______, _______, _______
     ),
 
     [_SYM] = LAYOUT(
