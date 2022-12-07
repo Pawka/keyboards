@@ -251,7 +251,7 @@ void matrix_scan_user(void) {
             // TODO: make compatible with Mac.
             SEND_STRING(SS_LCTL(SS_LSFT("t")));
         }
-        SEQ_TWO_KEYS(KC_W, KC_E) {
+        SEQ_TWO_KEYS(KC_E, KC_W) {
             SEND_STRING("povilas.");
             SEND_STRING("balzara");
             SEND_STRING("vicius");
@@ -259,7 +259,7 @@ void matrix_scan_user(void) {
             SEND_STRING("chronos");
             SEND_STRING("phere.io");
         }
-        SEQ_TWO_KEYS(KC_P, KC_E) {
+        SEQ_TWO_KEYS(KC_E, KC_E) {
             SEND_STRING("povilas");
             SEND_STRING("@");
             SEND_STRING("balzara");
