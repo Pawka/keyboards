@@ -80,6 +80,12 @@ enum layers {
 #define NEW_TAB LCTL(KC_T)
 #define CLOSE_TAB LCTL(KC_W)
 
+// Alt-Tab window switch variables to preserve state.
+#define ALT_TAB_ENCODER_TIMER 500
+bool is_alt_tab_active = false;
+bool is_alt_shift_tab_active = false;
+uint16_t alt_tab_timer = 0;
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT(
@@ -160,6 +166,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #ifdef ENCODER_ENABLE
+
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
         if (IS_LAYER_ON(_SYM)) {
@@ -179,13 +186,34 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     }
     else if (index == 1) {
-        // Scroll up/down
-        if (clockwise) {
-            tap_code(KC_WH_D);
-            tap_code(KC_WH_D);
+        if (IS_LAYER_ON(_NAV)) {
+            // Alt-Tab window switch on encoder.
+            if (clockwise) {
+                if (!is_alt_tab_active) {
+                    is_alt_tab_active = true;
+					unregister_code(KC_LSFT);
+					register_code(KC_LALT);
+                }
+                alt_tab_timer = timer_read();
+                tap_code(KC_TAB);
+            } else {
+                if (!is_alt_shift_tab_active) {
+                    is_alt_shift_tab_active = true;
+					register_code(KC_LALT);
+					register_code(KC_LSFT);
+                }
+                alt_tab_timer = timer_read();
+                tap_code(KC_TAB);
+            }
         } else {
-            tap_code(KC_WH_U);
-            tap_code(KC_WH_U);
+            // Scroll up/down
+            if (clockwise) {
+                tap_code(KC_WH_D);
+                tap_code(KC_WH_D);
+            } else {
+                tap_code(KC_WH_U);
+                tap_code(KC_WH_U);
+            }
         }
     }
     return false;
@@ -267,6 +295,15 @@ void matrix_scan_user(void) {
             SEND_STRING(".lt");
         }
     }
+	// Alt+Tab encoder timer
+	if (is_alt_tab_active) {
+		if (timer_elapsed(alt_tab_timer) > ALT_TAB_ENCODER_TIMER) {
+			unregister_code(KC_LALT);
+			unregister_code(KC_LSFT);
+			is_alt_tab_active = false;
+			is_alt_shift_tab_active = false;
+		}
+	}
 }
 
 // Configure tri-layer. This enables the layer when other two layer keys are
