@@ -16,8 +16,8 @@
 #include QMK_KEYBOARD_H
 #include "g/keymap_combo.h"
 
-// Used for keylogging.
 #ifdef CONSOLE_ENABLE
+// Used for keylogging.
 #include "print.h"
 #endif
 
@@ -80,26 +80,29 @@ enum layers {
 #define NEW_TAB LCTL(KC_T)
 #define CLOSE_TAB LCTL(KC_W)
 
-// Alt-Tab window switch variables to preserve state.
-#define ALT_TAB_ENCODER_TIMER 500
-#define ALT_TAB_MODIFIER KC_LGUI // For Linux it is Alt, for MacOS it is Meta.
-bool is_alt_tab_active = false;
-bool is_alt_shift_tab_active = false;
-uint16_t alt_tab_timer = 0;
+#define TO_MACOS DF(_MACOS)
+#define TO_QWERTY DF(_QWERTY)
+
+// Task switcher (Alt+Tab) configuration.
+#define TS_LAYER _NAV
+// By default it is ALT+Tab. For MacOS it is META+Tab. It is set as variable so
+// it could be changed on OS switch.
+int TS_MOD = KC_LALT;
+bool is_taskswitcher_active = false;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT(
      KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T   ,                                     KC_Y   , KC_U   , KC_I   , KC_O  , KC_P ,    KC_BSLS,
      KC_LSFT, KC_A  , HOME_S, HOME_D , HOME_F , KC_G   ,                                     KC_H   , HOME_J , HOME_K , HOME_L, KC_SCLN , CTL_QUOT,
-     KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   , DF(_MACOS), _______, _______, KC_LEAD, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
+     KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   , TO_MACOS, _______, _______, KC_LEAD, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
                               KC_MUTE, TO(_MOUSE),KC_LGUI,LT_SPC, CTL_TAB, LT_ENT , LT_BSPC, LOCALE,  MOUSE  , _______
     ),
 
     [_MACOS] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______, DF(_QWERTY), _______, _______, _______, _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, TO_QWERTY, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, GUI_TAB, _______, _______, _______, _______, _______
     ),
 
@@ -167,7 +170,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #ifdef ENCODER_ENABLE
-
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
         if (IS_LAYER_ON(_SYM)) {
@@ -187,25 +189,16 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     }
     else if (index == 1) {
-        if (IS_LAYER_ON(_NAV)) {
-            // Alt-Tab window switch on encoder.
+        if (IS_LAYER_ON(TS_LAYER)) {
+            // Task switch on encoder (Alt+Tab)
+            is_taskswitcher_active = true;
+            register_code(TS_MOD);
             if (clockwise) {
-                if (!is_alt_tab_active) {
-                    is_alt_tab_active = true;
-					unregister_code(KC_LSFT);
-					register_code(ALT_TAB_MODIFIER);
-                }
-                alt_tab_timer = timer_read();
-                tap_code(KC_TAB);
+                unregister_code(KC_LSFT);
             } else {
-                if (!is_alt_shift_tab_active) {
-                    is_alt_shift_tab_active = true;
-					register_code(ALT_TAB_MODIFIER);
-					register_code(KC_LSFT);
-                }
-                alt_tab_timer = timer_read();
-                tap_code(KC_TAB);
+                register_code(KC_LSFT);
             }
+            tap_code(KC_TAB);
         } else {
             // Scroll up/down
             if (clockwise) {
@@ -221,36 +214,26 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 }
 #endif
 
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        // Win
-        case HOME_A:
-        case HOME_SCLN:
-            return TAPPING_TERM + 250;
-        // Alt
-        case HOME_S:
-        case HOME_L:
-            return TAPPING_TERM + 50;
-        // Ctrl
-        case HOME_D:
-        case HOME_K:
-        case CTL_TAB:
-            return TAPPING_TERM - 30;
-        // Shift
-        case HOME_F:
-        case HOME_J:
-            return TAPPING_TERM - 50;
-        case LT_BSPC:
-        case LT_ENT:
-            return TAPPING_TERM - 70;
-        default:
-            return TAPPING_TERM;
-    }
-}
-
-// Logger for heatmap.
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+#ifdef ENCODER_ENABLE
+  switch (keycode) {
+    case LT_SPC:
+      if (!record->event.pressed && is_taskswitcher_active) {
+        unregister_code(TS_MOD);
+        unregister_code(KC_LSFT);
+        is_taskswitcher_active = false;
+      }
+      break;
+    case TO_MACOS:
+        TS_MOD = KC_LGUI;
+        break;
+    case TO_QWERTY:
+        TS_MOD = KC_LALT;
+        break;
+  }
+#endif
 #ifdef CONSOLE_ENABLE
+    // Logger for heatmap.
     if (record->event.pressed) {
         uprintf("0x%04X,%u,%u,%u,%b,0x%02X,0x%02X,%u\n",
                 keycode,
@@ -296,19 +279,37 @@ void matrix_scan_user(void) {
             SEND_STRING(".lt");
         }
     }
-	// Alt+Tab encoder timer
-	if (is_alt_tab_active) {
-		if (timer_elapsed(alt_tab_timer) > ALT_TAB_ENCODER_TIMER) {
-			unregister_code(ALT_TAB_MODIFIER);
-			unregister_code(KC_LSFT);
-			is_alt_tab_active = false;
-			is_alt_shift_tab_active = false;
-		}
-	}
 }
 
 // Configure tri-layer. This enables the layer when other two layer keys are
 // pressed.
 layer_state_t layer_state_set_user(layer_state_t state) {
     return update_tri_layer_state(state, _NUM, _NAV, _FUNCTION);
+}
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // Win
+        case HOME_A:
+        case HOME_SCLN:
+            return TAPPING_TERM + 250;
+        // Alt
+        case HOME_S:
+        case HOME_L:
+            return TAPPING_TERM + 50;
+        // Ctrl
+        case HOME_D:
+        case HOME_K:
+        case CTL_TAB:
+            return TAPPING_TERM - 30;
+        // Shift
+        case HOME_F:
+        case HOME_J:
+            return TAPPING_TERM - 50;
+        case LT_BSPC:
+        case LT_ENT:
+            return TAPPING_TERM - 70;
+        default:
+            return TAPPING_TERM;
+    }
 }
