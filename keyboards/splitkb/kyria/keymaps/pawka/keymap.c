@@ -82,6 +82,7 @@ enum layers {
 
 // Alt-Tab window switch variables to preserve state.
 #define ALT_TAB_ENCODER_TIMER 500
+#define ALT_TAB_MODIFIER KC_LGUI // For Linux it is Alt, for MacOS it is Meta.
 bool is_alt_tab_active = false;
 bool is_alt_shift_tab_active = false;
 uint16_t alt_tab_timer = 0;
@@ -192,14 +193,14 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 if (!is_alt_tab_active) {
                     is_alt_tab_active = true;
 					unregister_code(KC_LSFT);
-					register_code(KC_LALT);
+					register_code(ALT_TAB_MODIFIER);
                 }
                 alt_tab_timer = timer_read();
                 tap_code(KC_TAB);
             } else {
                 if (!is_alt_shift_tab_active) {
                     is_alt_shift_tab_active = true;
-					register_code(KC_LALT);
+					register_code(ALT_TAB_MODIFIER);
 					register_code(KC_LSFT);
                 }
                 alt_tab_timer = timer_read();
@@ -298,7 +299,7 @@ void matrix_scan_user(void) {
 	// Alt+Tab encoder timer
 	if (is_alt_tab_active) {
 		if (timer_elapsed(alt_tab_timer) > ALT_TAB_ENCODER_TIMER) {
-			unregister_code(KC_LALT);
+			unregister_code(ALT_TAB_MODIFIER);
 			unregister_code(KC_LSFT);
 			is_alt_tab_active = false;
 			is_alt_shift_tab_active = false;
