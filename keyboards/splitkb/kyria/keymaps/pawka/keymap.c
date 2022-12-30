@@ -218,30 +218,34 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-#ifdef ENCODER_ENABLE
-    case LT_SPC:
-      if (!record->event.pressed && is_taskswitcher_active) {
-        unregister_code(TS_MOD);
-        unregister_code(KC_LSFT);
-        is_taskswitcher_active = false;
-      }
-      break;
-    case TO_MAC:
-        TS_MOD = KC_LGUI;
-        break;
-    case TO_QWERTY:
-        TS_MOD = KC_LALT;
-        break;
-#endif
-    case MAC_SPC:
-        if (record->event.pressed) {
-            layer_on(_NAV);
-        } else {
-            layer_off(_NAV);
-        }
-        break;
-  }
+    // Task switcher.
+    switch (keycode) {
+        case LT_SPC:
+        case MAC_SPC:
+            if (!record->event.pressed && is_taskswitcher_active) {
+                unregister_code(TS_MOD);
+                unregister_code(KC_LSFT);
+                is_taskswitcher_active = false;
+            }
+            break;
+        case TO_MAC:
+            TS_MOD = KC_LGUI;
+            break;
+        case TO_QWERTY:
+            TS_MOD = KC_LALT;
+            break;
+    }
+
+    switch (keycode) {
+        case MAC_SPC:
+            if (record->event.pressed) {
+                layer_on(_NAV);
+            } else {
+                layer_off(_NAV);
+            }
+            break;
+    }
+
 #ifdef CONSOLE_ENABLE
     // Logger for heatmap.
     if (record->event.pressed) {
