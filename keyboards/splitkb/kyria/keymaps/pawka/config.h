@@ -32,7 +32,10 @@
 
 // Set proper resolution for industrial encoder.
 #define ENCODER_RESOLUTION 2
+// Flip encoder direction for rev1 Kyria.
+#if defined(KEYBOARD_splitkb_kyria_rev1)
 #define ENCODER_DIRECTION_FLIP
+#endif
 
 #define MOUSEKEY_INTERVAL       20
 #define MOUSEKEY_DELAY          0
