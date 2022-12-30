@@ -25,7 +25,7 @@ enum layers {
     _QWERTY = 0,
     _MAC,
     _NAV,
-    _NAV_OSX,
+    _MACNAV,
     _SYM,
     _NUM,
     _FUNCTION,
@@ -35,27 +35,20 @@ enum layers {
 
 // Aliases for readability
 #define LOCALE   MO(_LOCALE)
-#define NUM      MO(_NUM)
 #define MOUSE    TT(_MOUSE)
 #define MOUSE_1  KC_MS_BTN1
 #define MOUSE_2  KC_MS_BTN2
 #define MOUSE_3  KC_MS_BTN3
 #define TO_BASE  TO(_QWERTY)
-
-#define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define CTL_TAB  MT(MOD_LCTL, KC_TAB)
 #define GUI_TAB  MT(MOD_LGUI, KC_TAB)
-#define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
-#define CTL_MINS MT(MOD_RCTL, KC_MINUS)
-#define ALT_ENT  MT(MOD_LALT, KC_ENT)
 
 // Layers
 #define LT_ENT   LT(_NUM, KC_ENT)
 #define LT_BSPC  LT(_SYM, KC_BSPC)
-#define LT_DEL   LT(_LOCALE, KC_DEL)
 #define LT_TAB   LT(_MOUSE, KC_TAB)
 #define LT_SPC   LT(_NAV, KC_SPC)
-#define LT_SPC_OSX LT(_NAV_OSX, KC_SPC)
+#define MAC_SPC LT(_MACNAV, KC_SPC)
 
 // Left-hand home row mods
 #define HOME_A LGUI_T(KC_A)
@@ -69,8 +62,6 @@ enum layers {
 #define HOME_L LALT_T(KC_L)
 #define HOME_SCLN RGUI_T(KC_SCLN)
 
-#define UNDO    LCTL(KC_Z)
-#define REDO    LCTL(LSFT(KC_Z))
 #define CUT     LCTL(KC_X)
 #define COPY    LCTL(KC_C)
 #define PASTE   LCTL(KC_V)
@@ -80,13 +71,11 @@ enum layers {
 #define PREV_TAB LCTL(KC_PGUP)
 #define NEXT_TAB LCTL(KC_PGDN)
 #define NEW_TAB LCTL(KC_T)
-#define CLOSE_TAB LCTL(KC_W)
+#define CLS_TAB LCTL(KC_W)
 
 #define TO_MAC DF(_MAC)
 #define TO_QWERTY DF(_QWERTY)
 
-// Task switcher (Alt+Tab) configuration.
-#define TS_LAYER _NAV
 // By default it is ALT+Tab. For MAC it is META+Tab. It is set as variable so
 // it could be changed on OS switch.
 int TS_MOD = KC_LALT;
@@ -96,29 +85,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT(
      KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T   ,                                     KC_Y   , KC_U   , KC_I   , KC_O  , KC_P ,    KC_BSLS,
-     KC_LSFT, KC_A  , HOME_S, HOME_D , HOME_F , KC_G   ,                                     KC_H   , HOME_J , HOME_K , HOME_L, KC_SCLN , CTL_QUOT,
+     KC_LSFT, KC_A  , HOME_S, HOME_D , HOME_F , KC_G   ,                                     KC_H   , HOME_J , HOME_K , HOME_L, KC_SCLN , KC_QUOTE,
      KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   ,  TO_MAC, _______, _______, KC_LEAD, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
-                              KC_MUTE, TO(_MOUSE),KC_LGUI,LT_SPC, CTL_TAB, LT_ENT , LT_BSPC, LOCALE,  MOUSE  , _______
+                              KC_MUTE, TO(_MOUSE),KC_LGUI,LT_SPC, CTL_TAB, LT_ENT , LT_BSPC, LOCALE , MOUSE  , _______
     ),
 
     [_MAC] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______, TO_QWERTY, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-                                 _______, _______, _______, LT_SPC_OSX,GUI_TAB, _______, _______, _______, _______, _______
+      _______, _______, _______, _______, _______, _______,TO_QWERTY, _______,_______, _______, _______, _______, _______, _______, _______, _______,
+                                 _______, _______, _______,MAC_SPC,GUI_TAB,_______, _______, _______, _______, _______
     ),
 
     [_NAV] = LAYOUT(
       _______, _______, PREV_TAB,NEW_TAB, NEXT_TAB,_______,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______,
+      _______, _______, _______, CLS_TAB, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______,
                                  _______, _______, _______, _______, _______, _______, KC_DEL,  _______, _______, _______
     ),
 
-    [_NAV_OSX] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    // Mac navigation layer should be used to override keys on navigation (_NAV)
+    // layer. If key on navigation layer does not need to be changed on Mac - it
+    // is not required to add it to the Mac navigation layer since the key will
+    // be inherited from _NAV.
+    [_MACNAV] = LAYOUT(
+      _______, _______, _______,LGUI(KC_T),_______,_______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______,  _______,_______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______,LGUI(KC_W),_______,_______, _______, _______, _______, _______, LGUI(KC_LEFT),_______,_______,LGUI(KC_RIGHT),_______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -133,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NUM] = LAYOUT(
       _______,  KC_1  ,  KC_2  ,  KC_3  ,  KC_4  ,  KC_5  ,                                      KC_6  ,  KC_7  ,  KC_8  ,  KC_9  , KC_0   , KC_MINS,
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  KC_F11,  KC_F12, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -199,7 +192,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     }
     else if (index == 1) {
-        if (IS_LAYER_ON(TS_LAYER)) {
+        if (IS_LAYER_ON(_NAV)) {
             // Task switch on encoder (Alt+Tab)
             is_taskswitcher_active = true;
             register_code(TS_MOD);
@@ -241,7 +234,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         TS_MOD = KC_LALT;
         break;
 #endif
-    case LT_SPC_OSX:
+    case MAC_SPC:
         if (record->event.pressed) {
             layer_on(_NAV);
         } else {
