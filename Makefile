@@ -31,11 +31,11 @@ $(VENV): submodules
 
 $(KYRIA_LINK): submodules
 	@echo "Symklink for Kyria"
-	ln -Tsf $(HOME)/$(KYRIA) $(KYRIA_LINK)
+	ln -sf $(HOME)/$(KYRIA) $(KYRIA_LINK)
 
 $(ERGODOX_LINK): submodules
 	@echo "Symklink for Ergodox"
-	ln -Tsf $(HOME)/$(ERGODOX) $(ERGODOX_LINK)
+	ln -sf $(HOME)/$(ERGODOX) $(ERGODOX_LINK)
 
 .PHONY: clean
 clean:

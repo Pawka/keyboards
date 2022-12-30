@@ -2,3 +2,4 @@ qmk_firmware
 env
 .local
 .cache
+Library
