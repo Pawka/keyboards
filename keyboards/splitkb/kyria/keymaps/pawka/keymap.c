@@ -23,9 +23,10 @@
 
 enum layers {
     _QWERTY = 0,
-    _MACOS,
-    _SYM,
+    _MAC,
     _NAV,
+    _NAV_OSX,
+    _SYM,
     _NUM,
     _FUNCTION,
     _MOUSE,
@@ -54,6 +55,7 @@ enum layers {
 #define LT_DEL   LT(_LOCALE, KC_DEL)
 #define LT_TAB   LT(_MOUSE, KC_TAB)
 #define LT_SPC   LT(_NAV, KC_SPC)
+#define LT_SPC_OSX LT(_NAV_OSX, KC_SPC)
 
 // Left-hand home row mods
 #define HOME_A LGUI_T(KC_A)
@@ -80,12 +82,12 @@ enum layers {
 #define NEW_TAB LCTL(KC_T)
 #define CLOSE_TAB LCTL(KC_W)
 
-#define TO_MACOS DF(_MACOS)
+#define TO_MAC DF(_MAC)
 #define TO_QWERTY DF(_QWERTY)
 
 // Task switcher (Alt+Tab) configuration.
 #define TS_LAYER _NAV
-// By default it is ALT+Tab. For MacOS it is META+Tab. It is set as variable so
+// By default it is ALT+Tab. For MAC it is META+Tab. It is set as variable so
 // it could be changed on OS switch.
 int TS_MOD = KC_LALT;
 bool is_taskswitcher_active = false;
@@ -95,15 +97,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
      KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T   ,                                     KC_Y   , KC_U   , KC_I   , KC_O  , KC_P ,    KC_BSLS,
      KC_LSFT, KC_A  , HOME_S, HOME_D , HOME_F , KC_G   ,                                     KC_H   , HOME_J , HOME_K , HOME_L, KC_SCLN , CTL_QUOT,
-     KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   , TO_MACOS, _______, _______, KC_LEAD, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
+     KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   ,  TO_MAC, _______, _______, KC_LEAD, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
                               KC_MUTE, TO(_MOUSE),KC_LGUI,LT_SPC, CTL_TAB, LT_ENT , LT_BSPC, LOCALE,  MOUSE  , _______
     ),
 
-    [_MACOS] = LAYOUT(
+    [_MAC] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, _______, _______, _______, _______, TO_QWERTY, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-                                 _______, _______, _______, _______, GUI_TAB, _______, _______, _______, _______, _______
+                                 _______, _______, _______, LT_SPC_OSX,GUI_TAB, _______, _______, _______, _______, _______
+    ),
+
+    [_NAV] = LAYOUT(
+      _______, _______, PREV_TAB,NEW_TAB, NEXT_TAB,_______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______,
+                                 _______, _______, _______, _______, _______, _______, KC_DEL,  _______, _______, _______
+    ),
+
+    [_NAV_OSX] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     [_SYM] = LAYOUT(
@@ -113,12 +129,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  KC_MPLY, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
-    [_NAV] = LAYOUT(
-      _______, _______, PREV_TAB,NEW_TAB, NEXT_TAB,_______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
-      _______, _______, _______, CLOSE_TAB,_______,_______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______,
-                                 _______, _______, _______, _______, _______, _______, KC_DEL,  _______, _______, _______
-    ),
 
     [_NUM] = LAYOUT(
       _______,  KC_1  ,  KC_2  ,  KC_3  ,  KC_4  ,  KC_5  ,                                      KC_6  ,  KC_7  ,  KC_8  ,  KC_9  , KC_0   , KC_MINS,
@@ -215,8 +225,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-#ifdef ENCODER_ENABLE
   switch (keycode) {
+#ifdef ENCODER_ENABLE
     case LT_SPC:
       if (!record->event.pressed && is_taskswitcher_active) {
         unregister_code(TS_MOD);
@@ -224,14 +234,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         is_taskswitcher_active = false;
       }
       break;
-    case TO_MACOS:
+    case TO_MAC:
         TS_MOD = KC_LGUI;
         break;
     case TO_QWERTY:
         TS_MOD = KC_LALT;
         break;
-  }
 #endif
+    case LT_SPC_OSX:
+        if (record->event.pressed) {
+            layer_on(_NAV);
+        } else {
+            layer_off(_NAV);
+        }
+        break;
+  }
 #ifdef CONSOLE_ENABLE
     // Logger for heatmap.
     if (record->event.pressed) {
@@ -281,9 +298,9 @@ void matrix_scan_user(void) {
     }
 }
 
-// Configure tri-layer. This enables the layer when other two layer keys are
-// pressed.
 layer_state_t layer_state_set_user(layer_state_t state) {
+    // Configure tri-layer. This enables the layer when other two layer keys are
+    // pressed.
     return update_tri_layer_state(state, _NUM, _NAV, _FUNCTION);
 }
 
