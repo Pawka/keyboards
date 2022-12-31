@@ -30,11 +30,15 @@ enum layers {
     _NUM,
     _FUNCTION,
     _MOUSE,
-    _LOCALE,
+    _LT_LINUX,
+    _LT_WIN,
+};
+
+enum my_keycodes {
+    LOCALE = SAFE_RANGE, // Switch to appropriate locale layer.
 };
 
 // Aliases for readability
-#define LOCALE   MO(_LOCALE)
 #define MOUSE    TT(_MOUSE)
 #define MOUSE_1  KC_MS_BTN1
 #define MOUSE_2  KC_MS_BTN2
@@ -91,10 +95,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_MAC] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______,TO_QWERTY, _______,_______, _______, _______, _______, _______, _______, _______, _______,
-                                 _______, _______, _______,MAC_SPC,GUI_TAB,_______, _______, _______, _______, _______
+      _______, _______, _______, _______, _______, _______,                                      _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______,                                      _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, TO_QWERTY,_______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                 _______, _______, _______, MAC_SPC , GUI_TAB, _______, _______, MO(_LT_WIN),_______,_______
     ),
 
     [_NAV] = LAYOUT(
@@ -144,12 +148,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, TO_BASE, MOUSE_3, MOUSE_2, MOUSE_1, _______, _______, _______, TO_BASE, _______
     ),
 
-    [_LOCALE] = LAYOUT(
-      _______, RALT(KC_1), RALT(KC_2), RALT(KC_3), RALT(KC_4), RALT(KC_5),    RALT(KC_6), RALT(KC_7), RALT(KC_8), RALT(KC_9), RALT(KC_0), RALT(KC_EQL),
+    [_LT_LINUX] = LAYOUT(
+      _______, RALT(KC_1),RALT(KC_2),RALT(KC_3),RALT(KC_4),RALT(KC_5),                          RALT(KC_6),RALT(KC_7),RALT(KC_8),RALT(KC_EQL),RALT(KC_9),RALT(KC_0),
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
+
+    // Layer is supposed to be used with Lithuanian QWERTY layout when native
+    // letters are used instead of numbers and with AltGr numbers are printed.
+    // Suitable for Windows, MacOS and can be configured on Linux.
+    [_LT_WIN] = LAYOUT(
+      _______, KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,                                     KC_6   , KC_7   , KC_8   , KC_EQL , KC_9   , KC_0   ,
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+
 // /*
 //  * Layer template
 //  *
@@ -172,6 +187,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //     ),
 };
 
+// Depending on value locale layer is switched to _LT_LINUX or _LT_WIN.
+bool default_locale_linux = true;
+
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
@@ -181,6 +199,13 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code(KC_MNXT);
             } else {
                 tap_code(KC_MPRV);
+            }
+        } else if (IS_LAYER_ON(_LT_WIN) || IS_LAYER_ON(_LT_LINUX)) {
+            // Change default locale layer.
+            if (clockwise) {
+                default_locale_linux = true;
+            } else {
+                default_locale_linux = false;
             }
         } else {
             // Volume control
@@ -218,6 +243,27 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // Common keycodes.
+    switch (keycode) {
+        case LOCALE:
+            if (record->event.pressed) {
+                layer_on(default_locale_linux ? _LT_LINUX : _LT_WIN);
+            } else {
+                layer_off(_LT_LINUX);
+                layer_off(_LT_WIN);
+            }
+            break;
+        case MAC_SPC:
+            // When Mac navigation layer is activated also activate original
+            // navigation layer so keys would be inherited from former.
+            if (record->event.pressed) {
+                layer_on(_NAV);
+            } else {
+                layer_off(_NAV);
+            }
+            break;
+    }
+
     // Task switcher.
     switch (keycode) {
         case LT_SPC:
@@ -233,16 +279,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case TO_QWERTY:
             TS_MOD = KC_LALT;
-            break;
-    }
-
-    switch (keycode) {
-        case MAC_SPC:
-            if (record->event.pressed) {
-                layer_on(_NAV);
-            } else {
-                layer_off(_NAV);
-            }
             break;
     }
 

@@ -8,4 +8,5 @@ MOUSEKEY_ENABLE = yes
 LEADER_ENABLE = yes
 CAPS_WORD_ENABLE = yes
 
+# Use for debugging only.
 CONSOLE_ENABLE = no
