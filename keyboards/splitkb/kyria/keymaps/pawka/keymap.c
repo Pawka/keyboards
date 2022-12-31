@@ -28,7 +28,7 @@ enum layers {
     _MACNAV,
     _SYM,
     _NUM,
-    _FUNCTION,
+    _FUN,
     _MOUSE,
     _LT_LINUX,
     _LT_WIN,
@@ -134,7 +134,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
-    [_FUNCTION] = LAYOUT(
+    [_FUN] = LAYOUT(
       KC_F12 , KC_F1  , KC_F2  ,  KC_F3 , KC_F4  , KC_F5  ,                                     KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 ,
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, KC_F12 ,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
@@ -334,7 +334,7 @@ void matrix_scan_user(void) {
 layer_state_t layer_state_set_user(layer_state_t state) {
     // Configure tri-layer. This enables the layer when other two layer keys are
     // pressed.
-    return update_tri_layer_state(state, _NUM, _NAV, _FUNCTION);
+    return update_tri_layer_state(state, _SYM, _NAV, _FUN);
 }
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
