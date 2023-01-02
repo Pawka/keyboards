@@ -344,6 +344,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+#if defined(KEYBOARD_splitkb_kyria_rev1)
+    // Kyria Rev1. Kailh Jade switches.
     switch (keycode) {
         // Win
         case HOME_A:
@@ -368,4 +370,33 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         default:
             return TAPPING_TERM;
     }
+#else
+    // Kyria Rev2. Kailh Choc White switches.
+    switch (keycode) {
+        // Win
+        case HOME_A:
+        case HOME_SCLN:
+            return TAPPING_TERM + 250;
+        // Alt
+        case HOME_S:
+        case HOME_L:
+            return TAPPING_TERM + 50;
+        // Ctrl
+        case HOME_D:
+        case CTL_TAB:
+            return TAPPING_TERM - 30;
+        // Ctrl (right)
+        case HOME_K:
+            return TAPPING_TERM - 50;
+        // Shift
+        case HOME_F:
+        case HOME_J:
+            return TAPPING_TERM - 70;
+        case LT_BSPC:
+        case LT_ENT:
+            return TAPPING_TERM - 70;
+        default:
+            return TAPPING_TERM;
+    }
+#endif
 }
