@@ -76,6 +76,10 @@ enum layers {
 #define TO_MAC DF(_MAC)
 #define TO_QWERTY DF(_QWERTY)
 
+// Check if current base layout is set to _MAC.
+#define IS_MAC default_layer_state == _MAC
+
+
 // By default it is ALT+Tab. For MAC it is META+Tab. It is set as variable so
 // it could be changed on OS switch.
 int TS_MOD = KC_LALT;
@@ -183,6 +187,19 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             } else {
                 tap_code(KC_MPRV);
             }
+        } else if (IS_LAYER_ON(_LOCALE)) {
+            // Next/Prev keyboard layout.
+            if (clockwise) {
+                register_code(KC_LGUI);
+                tap_code(KC_SPACE);
+                unregister_code(KC_LGUI);
+            } else {
+                register_code(KC_LGUI);
+                register_code(KC_LSFT);
+                tap_code(KC_SPACE);
+                unregister_code(KC_LSFT);
+                unregister_code(KC_LGUI);
+            }
         } else {
             // Volume control
             if (clockwise) {
@@ -271,15 +288,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 LEADER_EXTERNS();
 
+extern layer_state_t default_layer_state;
+
 void matrix_scan_user(void) {
     LEADER_DICTIONARY() {
         leading = false;
         leader_end();
 
+        // Reopen last tab.
         SEQ_ONE_KEY(KC_T) {
-            // Reopen last tab.
-            // TODO: make compatible with Mac.
-            SEND_STRING(SS_LCTL(SS_LSFT("t")));
+            if (IS_MAC) {
+                SEND_STRING(SS_LGUI(SS_LSFT("t")));
+            } else {
+                SEND_STRING(SS_LCTL(SS_LSFT("t")));
+            }
+        }
+        // Lock screen.
+        SEQ_ONE_KEY(KC_L) {
+            if (IS_MAC) {
+                SEND_STRING(SS_LGUI(SS_LSFT("q")));
+            } else {
+                SEND_STRING(SS_LGUI("l"));
+            }
+        }
+        // Print debug information.
+        SEQ_TWO_KEYS(KC_D, KC_D) {
+            if (IS_MAC) {
+                SEND_STRING("Default layer: _MAC");
+            } else {
+                SEND_STRING("Default layer: _QWERTY");
+            }
         }
         SEQ_TWO_KEYS(KC_E, KC_W) {
             SEND_STRING("povilas.");
