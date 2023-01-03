@@ -51,7 +51,6 @@ enum layers {
 #define MAC_SPC  LT(_MACNAV, KC_SPC)
 
 // Left-hand home row mods
-#define HOME_A LGUI_T(KC_A)
 #define HOME_S LALT_T(KC_S)
 #define HOME_D LCTL_T(KC_D)
 #define HOME_F LSFT_T(KC_F)
@@ -60,7 +59,6 @@ enum layers {
 #define HOME_J RSFT_T(KC_J)
 #define HOME_K RCTL_T(KC_K)
 #define HOME_L LALT_T(KC_L)
-#define HOME_SCLN RGUI_T(KC_SCLN)
 
 #define CUT     LCTL(KC_X)
 #define COPY    LCTL(KC_C)
@@ -346,10 +344,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 #if defined(KEYBOARD_splitkb_kyria_rev1)
     // Kyria Rev1. Kailh Jade switches.
     switch (keycode) {
-        // Win
-        case HOME_A:
-        case HOME_SCLN:
-            return TAPPING_TERM + 250;
         // Alt
         case HOME_S:
         case HOME_L:
@@ -372,10 +366,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 #else
     // Kyria Rev2. Kailh Choc White switches.
     switch (keycode) {
-        // Win
-        case HOME_A:
-        case HOME_SCLN:
-            return TAPPING_TERM + 250;
         // Alt
         case HOME_S:
         case HOME_L:
