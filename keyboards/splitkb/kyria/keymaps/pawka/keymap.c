@@ -76,9 +76,10 @@ enum layers {
 #define TO_MAC DF(_MAC)
 #define TO_QWERTY DF(_QWERTY)
 
+
+extern layer_state_t default_layer_state;
 // Check if current base layout is set to _MAC.
 #define IS_MAC default_layer_state == _MAC
-
 
 // By default it is ALT+Tab. For MAC it is META+Tab. It is set as variable so
 // it could be changed on OS switch.
@@ -288,8 +289,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 LEADER_EXTERNS();
 
-extern layer_state_t default_layer_state;
-
 void matrix_scan_user(void) {
     LEADER_DICTIONARY() {
         leading = false;
@@ -306,7 +305,7 @@ void matrix_scan_user(void) {
         // Lock screen.
         SEQ_ONE_KEY(KC_L) {
             if (IS_MAC) {
-                SEND_STRING(SS_LGUI(SS_LSFT("q")));
+                SEND_STRING(SS_LGUI(SS_LCTL("q")));
             } else {
                 SEND_STRING(SS_LGUI("l"));
             }
@@ -387,11 +386,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM - 30;
         // Ctrl (right)
         case HOME_K:
-            return TAPPING_TERM - 50;
+            return TAPPING_TERM - 40;
         // Shift
         case HOME_F:
         case HOME_J:
-            return TAPPING_TERM - 70;
+            return TAPPING_TERM - 40;
         case LT_BSPC:
         case LT_ENT:
             return TAPPING_TERM - 40;
