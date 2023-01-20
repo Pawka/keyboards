@@ -77,7 +77,7 @@ enum layers {
 
 extern layer_state_t default_layer_state;
 // Check if current base layout is set to _MAC.
-#define IS_MAC default_layer_state == _MAC
+#define IS_MAC get_highest_layer(default_layer_state) == _MAC
 
 // By default it is ALT+Tab. For MAC it is META+Tab. It is set as variable so
 // it could be changed on OS switch.
