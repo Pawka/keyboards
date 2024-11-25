@@ -89,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
      KC_ESC , KC_Q  , KC_W  , KC_E   , KC_R   , KC_T   ,                                    KC_Y   , KC_U   , KC_I   , KC_O  , KC_P ,    KC_BSLS,
      KC_LSFT, KC_A  , HOME_S, HOME_D , HOME_F , KC_G   ,                                    KC_H   , HOME_J , HOME_K , HOME_L, KC_SCLN , KC_QUOTE,
-     KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   , TO_MAC, _______, _______, KC_LEAD, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
+     KC_LCTL, KC_Z  , KC_X  , KC_C   , KC_V   , KC_B   , TO_MAC, _______, _______, QK_LEAD, KC_N   , KC_M   , KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
                               KC_MUTE, MOUSE  , KC_LGUI, NAV,    CTL_TAB, LT_ENT , LT_BSPC, LOCALE , MOUSE  , _______
     ),
 
@@ -285,52 +285,54 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-LEADER_EXTERNS();
+/* LEADER_EXTERNS(); */
 
-void matrix_scan_user(void) {
-    LEADER_DICTIONARY() {
-        leading = false;
-        leader_end();
+void leader_end_user(void) {
+    /* leader_end(); */
 
-        // Reopen last tab.
-        SEQ_ONE_KEY(KC_T) {
-            if (IS_MAC) {
-                SEND_STRING(SS_LGUI(SS_LSFT("t")));
-            } else {
-                SEND_STRING(SS_LCTL(SS_LSFT("t")));
-            }
+    // Reopen last tab.
+    if (leader_sequence_one_key(KC_T)) {
+        if (IS_MAC) {
+            SEND_STRING(SS_LGUI(SS_LSFT("t")));
+        } else {
+            SEND_STRING(SS_LCTL(SS_LSFT("t")));
         }
-        // Lock screen.
-        SEQ_ONE_KEY(KC_L) {
-            if (IS_MAC) {
-                SEND_STRING(SS_LGUI(SS_LCTL("q")));
-            } else {
-                SEND_STRING(SS_LGUI("l"));
-            }
+        return;
+    }
+    // Lock screen.
+    if (leader_sequence_one_key(KC_L)) {
+        if (IS_MAC) {
+            SEND_STRING(SS_LGUI(SS_LCTL("q")));
+        } else {
+            SEND_STRING(SS_LGUI("l"));
         }
-        // Print debug information.
-        SEQ_TWO_KEYS(KC_D, KC_D) {
-            if (IS_MAC) {
-                SEND_STRING("Default layer: _MAC");
-            } else {
-                SEND_STRING("Default layer: _QWERTY");
-            }
+        return;
+    }
+    // Print debug information.
+    if (leader_sequence_two_keys(KC_D, KC_D)) {
+        if (IS_MAC) {
+            SEND_STRING("Default layer: _MAC");
+        } else {
+            SEND_STRING("Default layer: _QWERTY");
         }
-        SEQ_TWO_KEYS(KC_E, KC_W) {
-            SEND_STRING("povilas.");
-            SEND_STRING("balzara");
-            SEND_STRING("vicius");
-            SEND_STRING("@");
-            SEND_STRING("chronos");
-            SEND_STRING("phere.io");
-        }
-        SEQ_TWO_KEYS(KC_E, KC_E) {
-            SEND_STRING("povilas");
-            SEND_STRING("@");
-            SEND_STRING("balzara");
-            SEND_STRING("vicius");
-            SEND_STRING(".lt");
-        }
+        return;
+    }
+    if (leader_sequence_two_keys(KC_E, KC_W)) {
+        SEND_STRING("povilas.");
+        SEND_STRING("balzara");
+        SEND_STRING("vicius");
+        SEND_STRING("@");
+        SEND_STRING("chronos");
+        SEND_STRING("phere.io");
+        return;
+    }
+    if (leader_sequence_two_keys(KC_E, KC_E)) {
+        SEND_STRING("povilas");
+        SEND_STRING("@");
+        SEND_STRING("balzara");
+        SEND_STRING("vicius");
+        SEND_STRING(".lt");
+        return;
     }
 }
 

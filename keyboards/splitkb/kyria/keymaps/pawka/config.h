@@ -27,7 +27,6 @@
 // Settings for Home Row Mods: https://precondition.github.io/home-row-mods
 #define TAPPING_TERM_PER_KEY
 #define PERMISSIVE_HOLD
-#define IGNORE_MOD_TAP_INTERRUPT
 #define RETRO_TAPPING_PER_KEY
 
 // Set proper resolution for industrial encoder.
