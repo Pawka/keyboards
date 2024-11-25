@@ -84,6 +84,20 @@ extern layer_state_t default_layer_state;
 int TS_MOD = KC_LALT;
 bool is_taskswitcher_active = false;
 
+// keyboard_post_init_user is executed at the end of QMK initialization.
+void keyboard_post_init_user(void) {
+#if defined(KEYBOARD_splitkb_kyria_rev2)
+    // For rev2 Kyria set to Mac layer by default because it is being used with
+    // Macbook all the time.
+    set_single_persistent_default_layer(_MAC);
+#endif
+    if (IS_MAC) {
+        // Set "task switcher" key to Mac on keyboard boot if the default layer
+        // is set to _MAC.
+        TS_MOD = KC_LGUI;
+    }
+}
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT(
