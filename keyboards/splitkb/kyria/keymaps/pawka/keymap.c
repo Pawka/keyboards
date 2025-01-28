@@ -70,6 +70,10 @@ enum layers {
 #define NEXT_TAB LCTL(KC_PGDN)
 #define NEW_TAB LCTL(KC_T)
 #define CLS_TAB LCTL(KC_W)
+#define BCK_TAB LALT(KC_LEFT)
+#define FWD_TAB LALT(KC_RIGHT)
+#define BCK_MAC LGUI(KC_LEFT)
+#define FWD_MAC LGUI(KC_RIGHT)
 
 #define TO_MAC DF(_MAC)
 #define TO_QWERTY DF(_QWERTY)
@@ -115,7 +119,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAV] = LAYOUT(
-      _______, _______, PREV_TAB,NEW_TAB, NEXT_TAB,_______,                                     _______, _______, _______, _______, _______, _______,
+      _______, BCK_TAB, PREV_TAB,NEW_TAB, NEXT_TAB,FWD_TAB,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
       _______, _______, _______, CLS_TAB, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______,
                                  _______, _______, _______, _______, _______, _______, KC_DEL,  _______, _______, _______
@@ -126,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // is not required to add it to the Mac navigation layer since the key will
     // be inherited from _NAV.
     [_MACNAV] = LAYOUT(
-      _______, _______, _______,LGUI(KC_T),_______,_______,                                     _______, _______, _______, _______, _______, _______,
+      _______, BCK_MAC, _______,LGUI(KC_T),_______,FWD_MAC,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, _______, _______,  _______,_______,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, _______,LGUI(KC_W),_______,_______, _______, _______, _______, _______, LGUI(KC_LEFT),_______,_______,LGUI(KC_RIGHT),_______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -155,8 +159,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_MOUSE] = LAYOUT(
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                     XXXXXXX, KC_WH_D, KC_MS_U, KC_WH_U, XXXXXXX, _______,
-      _______, SEL_ALL, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,                                     XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX, _______,
+      _______, XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX,                                     XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX, _______,
+      _______, SEL_ALL, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,                                     XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX, _______,
       _______, XXXXXXX, CUT    , COPY   , PASTE  , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
                                  _______, TO_BASE, MOUSE_3, MOUSE_2, MOUSE_1, MOUSE_1, MOUSE_2, _______, TO_BASE, _______
     ),
